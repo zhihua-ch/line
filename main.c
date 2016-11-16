@@ -13,8 +13,8 @@
 #define PATH	"/sys/class/gpio/pio"
 #define dir		"/direction"
 #define val		"/value"
-#define IN	 	"in"
-#define OUT		"out"
+#define IN	 	0
+#define OUT		1
 
 //int transform(int num, char * name);
 int transNum(int num, char*setVal);
@@ -46,8 +46,9 @@ int main(int argc, char** argv){
 	int i, example;
 	char pathName[40];
 	char keypath[4];
+	char value;
 	
-	for(i=0;i<40;i++) pathName[i] = 0x0;
+	for(i=0;i<40;i++) pathName[i] = 0x0;// seem need to set pathname give other function to use
 	for(i=0;i<4;i++) keypath[i] = 0x0;
 	//inital input; inital output; read;
 	/*1transform num to string*/
@@ -55,6 +56,12 @@ int main(int argc, char** argv){
 	strncpy(pathName, PATH, 19);
 	IniPin(example, pathName, 1);
 	pinOut(example, 0);
+	
+	for(i=20;i<40;i++)pathName[i]=0x0;
+	
+	IniPin(153,pathName, IN);
+	value = pinRead(153);
+	printf(" pin value read as%c \n", value);
 	/* make a long path name string*/
 }
 void IniPin(int num, char * pathName, int direction){//"153" "E25" 153
